@@ -107,7 +107,7 @@ public class WebController {
     }
     
     @RequestMapping("/auth  ")
-    public String auth(
+    public String authSpace(
             HttpSession httpSession,
             @RequestParam(value = "code", required = false) String code,
             @RequestParam(value = "state", required = false) String state,
