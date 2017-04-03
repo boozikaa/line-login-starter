@@ -31,6 +31,7 @@
           <div class="area">
             <div class="center-block profile-margin">
               <img th:src="${profile.pictureUrl}" class="profile-img img-circle" />
+              <h3 th:text="${profile.userId}"></h3>
               <h3 th:text="${profile.displayName}"></h3>
               <p th:text="${profile.statusMessage}" class="lead"></p>
               <button type="button" id="verify" class="btn btn-success btn-lg btn-block profile-button">verify</button>
