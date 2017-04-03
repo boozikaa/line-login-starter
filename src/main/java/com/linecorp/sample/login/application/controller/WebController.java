@@ -106,7 +106,7 @@ public class WebController {
         return "redirect:/success";
     }
     
-    @RequestMapping("/auth  ")
+    @RequestMapping("/auth%20%20")
     public String authSpace(
             HttpSession httpSession,
             @RequestParam(value = "code", required = false) String code,
