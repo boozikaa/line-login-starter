@@ -105,6 +105,46 @@ public class WebController {
         httpSession.setAttribute(ACCESS_TOKEN, token);
         return "redirect:/success";
     }
+    
+    @RequestMapping("/auth  ")
+    public String auth(
+            HttpSession httpSession,
+            @RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "state", required = false) String state,
+            @RequestParam(value = "scope", required = false) String scope,
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "errorCode", required = false) String errorCode,
+            @RequestParam(value = "errorMessage", required = false) String errorMessage) {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("parameter code : " + code);
+            logger.debug("parameter state : " + state);
+            logger.debug("parameter scope : " + scope);
+            logger.debug("parameter error : " + error);
+            logger.debug("parameter errorCode : " + errorCode);
+            logger.debug("parameter errorMessage : " + errorMessage);
+        }
+
+        if (error != null || errorCode != null || errorMessage != null){
+            return "redirect:/loginCancel";
+        };
+
+        if (!state.equals(httpSession.getAttribute(LINE_WEB_LOGIN_STATE))){
+            return "redirect:/sessionError";
+        };
+
+        httpSession.removeAttribute(LINE_WEB_LOGIN_STATE);
+        AccessToken token = lineAPIService.accessToken(code);
+        if (logger.isDebugEnabled()) {
+            logger.debug("scope : " + token.scope);
+            logger.debug("access_token : " + token.access_token);
+            logger.debug("token_type : " + token.token_type);
+            logger.debug("expires_in : " + token.expires_in);
+            logger.debug("refresh_token : " + token.refresh_token);
+        }
+        httpSession.setAttribute(ACCESS_TOKEN, token);
+        return "redirect:/success";
+    }
 
     /**
     * <p>login success Page
